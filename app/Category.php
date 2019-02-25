@@ -10,7 +10,7 @@ class Category extends Model
         'category_name'
     ];
 
-    public $table = "categories";
+    
     public function products(){
         return $this->hasMany(Product::class);
     }
