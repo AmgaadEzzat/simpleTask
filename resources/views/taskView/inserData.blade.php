@@ -54,6 +54,18 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="productImage" class="col-md-4 col-form-label text-md-left">{{ __('Image for Product') }}</label>
+                            <div class="col-md-6 ">
+                                <input type="file"  name="image_name" value="Abload File" id="productImage" accept="image/*"  class="form-control {{ $errors->has('productImage') ? ' is-invalid' : '' }}" required>
+                                @if ($errors->has('image_name'))
+                                    <span class="invalid-feedback" role="alert">
+                                         <strong>{{ $errors->first('image_name') }}</strong>
+                                                                         </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn text-white" style="background-color: #ffb64d">

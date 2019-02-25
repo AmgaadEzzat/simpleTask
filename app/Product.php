@@ -13,6 +13,14 @@ class Product extends Model
 
     public $table="products";
     public function category(){
-        return $this->belongsTo(app\Category);
+        return $this->belongsTo(Category::class);
     }
+
+    public function images(){
+        return $this->hasMany(Image::class , 'product_id');
+    }
+
+
+
+    protected $hidden = array('created_at', 'updated_at');
 }

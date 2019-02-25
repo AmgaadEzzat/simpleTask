@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\TaskResource;
 use App\Image;
 use App\Product;
@@ -18,7 +20,7 @@ class TaskController extends Controller
     }
 
 
-    public function insertProduct(Request $request)
+    public function insertProduct(Request $request )
     {
 
         $this->validate($request,[
@@ -26,7 +28,6 @@ class TaskController extends Controller
             'product_price'=>'required',
         ]);
 
-        //dd($request);
         $categoryName=$request->category_name;
         $categoryId=DB::table('categories')->where('category_name','=',$categoryName)->get();
         $product = new Product();
@@ -38,6 +39,7 @@ class TaskController extends Controller
 
         $product->save();
         return back();
+        //return new ProductResource($product);
     }
 
     public function insertImage(Request $request){
@@ -62,12 +64,6 @@ class TaskController extends Controller
 
 
     public function showProduct(){
-        $products = DB::table('products')
-            ->leftJoin('categories', 'products.category_id', '=', 'categories.id')
-            ->select( 'categories.id', 'categories.category_name' , 'products.id'
-                , 'products.product_name' , 'products.product_price')->get();
-        return new TaskResource($products);
 
-       // return Response::json($products);
     }
 }

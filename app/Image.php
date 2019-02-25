@@ -10,4 +10,12 @@ class Image extends Model
         'image_name'
     ];
 
+    protected $appends = ['product_id'];
+
+    public function product(){
+        return $this->belongsTo(Product::class ,'product_id');
+    }
+
+    protected $hidden = array('created_at', 'updated_at');
+
 }
