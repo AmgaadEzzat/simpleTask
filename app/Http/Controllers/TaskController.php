@@ -14,9 +14,8 @@ use validator;
 class TaskController extends Controller
 {
 
-    public function getCategory(){
-       $categoryName=DB::table('categories')->get();
-       return view('taskView.inserData' ,compact('categoryName'));
+    public function showInsertDataViewBlade(){
+       return view('taskView.inserData' );
     }
 
 
@@ -28,56 +27,31 @@ class TaskController extends Controller
             'product_price'=>'required',
         ]);
 
-        $categoryName=$request->category_name;
-        $categoryId=DB::table('categories')->where('category_name','=',$categoryName)->get();
+        $category = new Category();
+        $category ->category_name = $request->category_name;
+        $category->save();
+
         $product = new Product();
-        $product->id = $request->id;
-        $product->product_name = $request->product_name;
+        $product-> product_name = $request->product_name;
         $product->product_price = $request->product_price;
-        $images = new Image();
-        if ($request->hasFile('image_name')) {
-            $image = $request->file('image_name');
-            $name = $image->getClientOriginalName();
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $name);
-            $images->image_name = $name;
-        }
-        $images ->product_id = $request->id;
-
-        foreach ($categoryId as $id)
-            $product->category_id =  $id->id;
-
-
-
-
-        $images->save();
+        $product-> category_id = $category->id;
         $product->save();
-        return back();
-        //return new ProductResource($product);
-    }
 
-    public function insertImage(Request $request){
-
-        $this->validate($request,[
-            'image_name'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
-
-
-        $images = new Image();
-        if ($request->hasFile('image_name')) {
-            $image = $request->file('image_name');
-            $name = $image->getClientOriginalName();
+        $image = new Image();
+        if ($request->hasFile('photos')){
+        foreach ($request->file('photos') as $file) {
+            $name = $file->getClientOriginalName();
             $destinationPath = public_path('/images');
-            $image->move($destinationPath, $name);
-            $images->image_name = $name;
+            $file->move($destinationPath, $name);
+            $photos[] = $name;
+
+            $image->product_id = $product->id;
+            $image->image_name = json_encode($photos);
+            $image->save();
         }
-        $images->save();
-        return redirect('taskView.show');
 
-    }
+        return back();
 
+    }}
 
-    public function showProduct(){
-
-    }
 }

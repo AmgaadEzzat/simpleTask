@@ -18,8 +18,7 @@ class TaskResource extends JsonResource
         return[
              'id' => $this->id,
              'name' => $this->category_name,
-             'products' =>$this ->products
-
+             'products' =>ProductResource::collection($this->whenLoaded('products'))
         ];
     }
 }

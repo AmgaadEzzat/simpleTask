@@ -10,20 +10,7 @@
                 <div class="card-body">
                     <form method="POST"  action="add" enctype="multipart/form-data" >
                         @csrf
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('productId') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="id" type="text" class="form-control{{ $errors->has('productName') ? ' is-invalid' : '' }}" name="id" value="{{ old('id') }}" required autofocus>
-
-                                @if ($errors->has('id'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-
-                        </div>
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('productName') }}</label>
 
@@ -53,25 +40,25 @@
                             </div>
                         </div>
 
-                        <div class="form-group row  ">
-                            <label for="type" class="col-md-4 col-form-label text-md-left"></label>
-                            <div class="col-md-6 ">
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-left">{{ __('productCtegory') }}</label>
 
-                                <label for="sel1">Category Name:</label>
-                                <span class="form-group" name="category_name">
-                                    <select class="form-control" id="sel1" name="category_name">
-                                        @foreach($categoryName as $catname)
-                                            <option name="category_name" >{{$catname->category_name}}</option>
-                                        @endforeach
-                                    </select>
-                                </span>
+                            <div class="col-md-6">
+                                <input id="ctegory" type="text" class="form-control{{ $errors->has('ctegory') ? ' is-invalid' : '' }}" name="category_name" value="{{ old('category_name') }}" required autofocus>
+
+                                @if ($errors->has('category_name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('category_name') }}</strong>
+                                    </span>
+                                @endif
                             </div>
+
                         </div>
 
                         <div class="form-group row">
                             <label for="productImage" class="col-md-4 col-form-label text-md-left">{{ __('Image for Product') }}</label>
                             <div class="col-md-6 ">
-                                <input type="file"  name="image_name" value="Abload File" id="productImage" accept="image/*"  class="form-control {{ $errors->has('productImage') ? ' is-invalid' : '' }}" required>
+                                <input type="file"  name="photos[]"  id="productImage"   class="form-control {{ $errors->has('productImage') ? ' is-invalid' : '' }}" multiple required>
                                 @if ($errors->has('image_name'))
                                     <span class="invalid-feedback" role="alert">
                                          <strong>{{ $errors->first('image_name') }}</strong>
@@ -93,6 +80,5 @@
         </div>
     </div>
 </div>
-
 
 @endsection

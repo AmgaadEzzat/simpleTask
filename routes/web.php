@@ -16,5 +16,5 @@ Route::get('/', function () {
 });
 
 Route::post('add' , 'TaskController@insertProduct');
-Route::get('inserDataView' ,'TaskController@getCategory' );
-Route::get('showProducts' ,'TaskController@showProduct');
+Route::get('inserDataViewBlade' ,'TaskController@showInsertDataViewBlade' );
+//Route::get('showProducts' ,'TaskController@showProduct');

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\TaskResource;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -15,8 +17,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return TaskResource::collection(Category::with('products')->paginate(25));
+        return TaskResource::collection(Category::with('products.images')->paginate());
+
     }
+
 
     /**
      * Store a newly created resource in storage.
